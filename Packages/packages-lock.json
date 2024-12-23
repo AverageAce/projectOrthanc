@@ -1,11 +1,5 @@
 {
   "dependencies": {
-    "com.prenominal.realtimecsg": {
-      "version": "file:RealtimeCSG",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.unity.ai.navigation": {
       "version": "2.0.5",
       "depth": 0,
