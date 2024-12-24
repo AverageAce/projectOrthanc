@@ -10,7 +10,7 @@ public class Interactable : MonoBehaviour
         // Call other script functions
         // Elevator Call Button
         elevatorCallButton elevatorCallButton = GetComponent<elevatorCallButton>();
-        elevator elevator = GameObject.FindObjectOfType<elevator>();
+        elevator elevator = GameObject.FindFirstObjectByType<elevator>();
         Debug.Log($"elevatorCallButton: {elevatorCallButton}");
         Debug.Log($"elevator: {elevator}");
         if (elevatorCallButton != null)

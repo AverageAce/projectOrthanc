@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class playerCamera : MonoBehaviour
 {
-    public Camera camera;
+    public new Camera camera;
     private elevator currentPlatform;
     private Vector3 lastPlatformPosition;
     private Vector3 velocity = Vector3.zero;
@@ -20,5 +20,10 @@ public class playerCamera : MonoBehaviour
             Vector3 targetPosition = camera.transform.position + currentPlatform.Movement;
             camera.transform.position = Vector3.SmoothDamp(camera.transform.position, targetPosition, ref velocity, smoothTime);
         }
+    }
+
+    public void SetCurrentPlatform(elevator platform)
+    {
+        currentPlatform = platform;
     }
 }

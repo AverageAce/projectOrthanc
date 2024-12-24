@@ -11,7 +11,7 @@ public class elevatorCallButton : MonoBehaviour
     {
         Debug.Log("OnButtonPressed called");
         StartCoroutine(MoveButton());
-        elevator elevator = GameObject.FindObjectOfType<elevator>();
+        elevator elevator = GameObject.FindFirstObjectByType<elevator>();
         Debug.Log($"elevator: {elevator}");
         // Open elevator doors
         StartCoroutine(elevator.OpenDoors());

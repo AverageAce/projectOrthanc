@@ -98,7 +98,7 @@ public class character : MonoBehaviour
         if (elevator != null) // If elevator is not null
         {
             currentPlatform = null; // Sets current platform to null
-            transform.SetParent(null); // Sets transform parent to null
+            // transform.SetParent(null); // Sets transform parent to null
             rb.isKinematic = false; // Sets rigid body is kinematic to false
             rb.useGravity = true; // Sets rigid body use gravity to true
             Debug.Log("Player exited elevator trigger");

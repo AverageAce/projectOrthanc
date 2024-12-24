@@ -10,6 +10,7 @@ public class elevator : MonoBehaviour
     private GameObject doorRightClosed; //Defines right door closed node
     private GameObject doorLeftOpen; //Defines left door open node
     private GameObject doorRightOpen; //Defines right door open node
+    private Rigidbody rb;
 
     private Vector3 lastPosition;
     public Vector3 Movement { get; private set; }  // Movement of elevator
@@ -26,6 +27,8 @@ public class elevator : MonoBehaviour
         doorRightClosed = GameObject.Find("doorRightClosed");
         doorLeftOpen = GameObject.Find("doorLeftOpen");
         doorRightOpen = GameObject.Find("doorRightOpen");
+        rb = GetComponent<Rigidbody>();
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
 
         lastPosition = transform.position;
     }

@@ -11,7 +11,7 @@ public class elevatorButtons : MonoBehaviour
     public void OnButtonPressed()
     {
         Debug.Log($"Button {floorNumber} was pressed");
-        elevator elevator = GameObject.FindObjectOfType<elevator>();
+        elevator elevator = GameObject.FindFirstObjectByType<elevator>();
         StartCoroutine(elevator.GoToFloor(floorNumber));
     }
 
