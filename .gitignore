@@ -6,6 +6,7 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 UserSettings/
+References/
 .vscode/
 *.csproj
 *.sln
