@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class elevatorCallButton : MonoBehaviour
 {
-    public float moveDistance = 0.02f;
-    public float moveSpeed = 0.5f;
+    public float moveDistance = 0.02f;  // Defines the distance to move the button
+    public float moveSpeed = 0.5f;      // Defines the speed to move the button
     
-    // On interaction, move inward
+    // On button press, move button inward
     public void OnButtonPressed()
     {
         Debug.Log("OnButtonPressed called");

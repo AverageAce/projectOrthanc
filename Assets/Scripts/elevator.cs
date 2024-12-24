@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class elevator : MonoBehaviour
 {
-    private GameObject elevatorBase; //Defines elevator base
-    private GameObject elevatorDoorLeft; //Defines left elevator door
-    private GameObject elevatorDoorRight; //Defines right elevator door
-    private GameObject doorLeftClosed; //Defines left door closed node
-    private GameObject doorRightClosed; //Defines right door closed node
-    private GameObject doorLeftOpen; //Defines left door open node
-    private GameObject doorRightOpen; //Defines right door open node
+    private GameObject elevatorBase;                //Defines elevator base
+    private GameObject elevatorDoorLeft;            //Defines left elevator door
+    private GameObject elevatorDoorRight;           //Defines right elevator door
+    private GameObject doorLeftClosed;              //Defines left door closed node
+    private GameObject doorRightClosed;             //Defines right door closed node
+    private GameObject doorLeftOpen;                //Defines left door open node
+    private GameObject doorRightOpen;               //Defines right door open node
 
     private Vector3 lastPosition;
-    public Vector3 Movement { get; private set; }  // Movement of elevator
+    public Vector3 Movement { get; private set; }   // Movement of elevator
 
     public float doorSpeed = 0.5f;
     public float elevatorSpeed = 2f;
@@ -32,8 +32,7 @@ public class elevator : MonoBehaviour
 
     void FixedUpdate()
     {
-        Movement = transform.position - lastPosition;
-        lastPosition = transform.position;
+        
     }
 
     
@@ -54,10 +53,11 @@ public class elevator : MonoBehaviour
     // Open doors when elevator call button is pressed
     public IEnumerator OpenDoors()
     {
+        /*
+        When function OnButtonPressed() is called, move gameObjects elevatorDoorLeft 
+        and elevatorDoorRight to the positions of doorLeftOpen and doorRightOpen
+        */
         Debug.Log("OpenDoors() called");
-
-        // When function OnButtonPressed() is called, move gameObjects elevatorDoorLeft and elevatorDoorRight to the positions
-        // of doorLeftOpen and doorRightOpen
         StartCoroutine(MoveToPosition(elevatorDoorLeft, doorLeftOpen.transform.position, doorSpeed));
         yield return StartCoroutine(MoveToPosition(elevatorDoorRight, doorRightOpen.transform.position, doorSpeed));
     }
@@ -65,10 +65,11 @@ public class elevator : MonoBehaviour
     // Close doors when elevator call button is pressed
     public IEnumerator CloseDoors()
     {
+        /*
+        When function OnButtonPressed() is called, move gameObjects elevatorDoorLeft and 
+        elevatorDoorRight to the positions of doorLeftClosed and doorRightClosed
+        */
         Debug.Log("CloseDoors() called");
-
-        // When function OnButtonPressed() is called, move gameObjects elevatorDoorLeft and elevatorDoorRight to the positions
-        // of doorLeftClosed and doorRightClosed
         StartCoroutine(MoveToPosition(elevatorDoorLeft, doorLeftClosed.transform.position, doorSpeed));
         yield return StartCoroutine(MoveToPosition(elevatorDoorRight, doorRightClosed.transform.position, doorSpeed));
     }
