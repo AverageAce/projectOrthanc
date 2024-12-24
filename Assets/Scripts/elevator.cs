@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class elevator : MonoBehaviour
@@ -10,6 +11,7 @@ public class elevator : MonoBehaviour
     private GameObject doorRightClosed;             //Defines right door closed node
     private GameObject doorLeftOpen;                //Defines left door open node
     private GameObject doorRightOpen;               //Defines right door open node
+    private GameObject floorCounter;                //Defines floor counter
 
     private Vector3 lastPosition;
     public Vector3 Movement { get; private set; }   // Movement of elevator
@@ -26,13 +28,32 @@ public class elevator : MonoBehaviour
         doorRightClosed = GameObject.Find("doorRightClosed");
         doorLeftOpen = GameObject.Find("doorLeftOpen");
         doorRightOpen = GameObject.Find("doorRightOpen");
+        floorCounter = GameObject.Find("FloorCounter");
 
         lastPosition = transform.position;
     }
 
-    void FixedUpdate()
+    void Update()
     {
+        // Update floorCounter text with a floorNodes value whenever doorRightClosed overlaps a floorNode
+        // lastNode is the last Floor Node doorRightClosed collided with
+        GameObject lastNode = null;
+
+        /*
+        if any Floor Node tagged object collides with doorRightClosed, get the floorNumber of the Floor Node
+        and update the floorCounter text with the floorNumber
+        */
+        foreach (GameObject floorNode in GameObject.FindGameObjectsWithTag("FloorNode"))
+        {
+            if (doorRightClosed.GetComponent<Collider>().bounds.Intersects(floorNode.GetComponent<Collider>().bounds))
+            {
+                lastNode = floorNode;
+                floorCounter.GetComponent<TextMeshPro>().text = lastNode.GetComponent<floorNode>().floorNumber.ToString();
+            }
+        }
         
+        
+
     }
 
     
