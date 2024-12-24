@@ -12,9 +12,7 @@ public class elevatorButtons : MonoBehaviour
     {
         Debug.Log($"Button {floorNumber} was pressed");
         elevator elevator = GameObject.FindObjectOfType<elevator>();
-        StartCoroutine(elevator.CloseDoors());
-        // StartCoroutine(elevator.GoToFloor(floorNumber));
-        // StartCoroutine(elevator.OpenDoors());
+        StartCoroutine(elevator.GoToFloor(floorNumber));
     }
 
     private IEnumerator MoveButton()

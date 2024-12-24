@@ -3,18 +3,38 @@ using UnityEngine;
 
 public class elevator : MonoBehaviour
 {
-    
-    [SerializeField] private GameObject elevatorBase; //Defines elevator base
-    [SerializeField] private GameObject elevatorDoorLeft; //Defines left elevator door
-    [SerializeField] private GameObject elevatorDoorRight; //Defines right elevator door
-    [SerializeField] private GameObject doorLeftClosed; //Defines left door closed node
-    [SerializeField] private GameObject doorRightClosed; //Defines right door closed node
-    [SerializeField] private GameObject doorLeftOpen; //Defines left door open node
-    [SerializeField] private GameObject doorRightOpen; //Defines right door open node
+    private GameObject elevatorBase; //Defines elevator base
+    private GameObject elevatorDoorLeft; //Defines left elevator door
+    private GameObject elevatorDoorRight; //Defines right elevator door
+    private GameObject doorLeftClosed; //Defines left door closed node
+    private GameObject doorRightClosed; //Defines right door closed node
+    private GameObject doorLeftOpen; //Defines left door open node
+    private GameObject doorRightOpen; //Defines right door open node
+
+    private Vector3 lastPosition;
+    public Vector3 Movement { get; private set; }  // Movement of elevator
 
     public float doorSpeed = 0.5f;
-
     public float elevatorSpeed = 2f;
+
+    void Start()
+    {
+        elevatorBase = GameObject.Find("elevatorFloor");
+        elevatorDoorLeft = GameObject.Find("elevatorDoorLeft");
+        elevatorDoorRight = GameObject.Find("elevatorDoorRight");
+        doorLeftClosed = GameObject.Find("doorLeftClosed");
+        doorRightClosed = GameObject.Find("doorRightClosed");
+        doorLeftOpen = GameObject.Find("doorLeftOpen");
+        doorRightOpen = GameObject.Find("doorRightOpen");
+
+        lastPosition = transform.position;
+    }
+
+    void FixedUpdate()
+    {
+        Movement = transform.position - lastPosition;
+        lastPosition = transform.position;
+    }
 
     
     private IEnumerator MoveToPosition(GameObject movingItem, Vector3 targetPosition, float speed)
@@ -57,6 +77,13 @@ public class elevator : MonoBehaviour
 
     public IEnumerator GoToFloor(int floorNumber)
     {
+        yield return StartCoroutine(CloseDoors());
+
+        Debug.Log($"eleLeftDoor right: {elevatorDoorLeft.transform.right}");
+        Debug.Log($"eleRightDoor right: {elevatorDoorRight.transform.right}");
+        Debug.Log($"doorLeftClosed right: {doorLeftClosed.transform.right}");
+        Debug.Log($"doorRightClosed right: {doorRightClosed.transform.right}");
+        
         Debug.Log($"GoToFloor({floorNumber}) called");
         
         // Get a list of all the floor nodes
@@ -72,18 +99,16 @@ public class elevator : MonoBehaviour
 
             int currentFloor = floorNodes[i].GetComponent<floorNode>().floorNumber;
 
-            
             if (currentFloor == floorNumber)
             {
                 Debug.Log($"currentFloor: {currentFloor}");
                 Debug.Log($"floorNumber: {floorNumber}");
                 Debug.Log("Elevator is going to the floor node that matches the floor number");
 
-
                 yield return StartCoroutine(MoveToPosition(elevatorBase, floorNodes[i].transform.position, elevatorSpeed)); 
+                yield return StartCoroutine(OpenDoors());
+                break;
             }
-            
         }
     }
-
 }

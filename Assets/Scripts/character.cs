@@ -12,18 +12,20 @@ public class character : MonoBehaviour
     public float defaultHeight = 2f; // Defines default height of the character
 
     private CharacterController characterController; // Defines character controller
-
+    private Rigidbody rb; // Defines rigid body
     private Vector3 moveDirection = Vector3.zero; // Defines move direction of the character
     private float rotationX = 0; // Defines rotation X of the character
-
-
+    private elevator currentPlatform;
     private bool canMove = true; // Defines if the character can move
+    private Vector3 lastPlatformPosition;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         characterController = GetComponent<CharacterController>(); // Gets the character controller component
+        rb = GetComponent<Rigidbody>(); // Gets the rigid body component
+        rb.interpolation = RigidbodyInterpolation.Interpolate; // Sets the rigid body interpolation to interpolate
         Cursor.lockState = CursorLockMode.Locked; // Locks the cursor
         Cursor.visible = false; // Makes the cursor invisible
     }
@@ -61,6 +63,45 @@ public class character : MonoBehaviour
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit); // Clamps rotation X
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0); // Sets player camera local rotation
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); // Sets transform rotation
+        }
+
+    }
+
+    // FixedUpdate is called once per physics frame
+    void FixedUpdate()
+    {
+        if (currentPlatform != null) // If current platform is not null
+        {
+            Vector3 platformMovement = currentPlatform.Movement;
+            characterController.Move(platformMovement);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        elevator elevator = other.GetComponentInParent<elevator>(); // Gets elevator component
+        if (elevator != null) // If elevator is not null
+        {
+            currentPlatform = elevator; // Sets current platform to elevator
+            Debug.Log($"currentPlaatform: {currentPlatform}");
+            lastPlatformPosition = elevator.transform.position;
+            transform.SetParent(elevator.transform); // Sets transform parent to elevator transform
+            rb.isKinematic = true; // Sets rigid body is kinematic to true
+            rb.useGravity = false; // Sets rigid body use gravity to false
+            Debug.Log("Player entered elevator trigger");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        elevator elevator = other.GetComponentInParent<elevator>(); // Gets elevator component
+        if (elevator != null) // If elevator is not null
+        {
+            currentPlatform = null; // Sets current platform to null
+            transform.SetParent(null); // Sets transform parent to null
+            rb.isKinematic = false; // Sets rigid body is kinematic to false
+            rb.useGravity = true; // Sets rigid body use gravity to true
+            Debug.Log("Player exited elevator trigger");
         }
     }
 }
