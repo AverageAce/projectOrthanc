@@ -10,7 +10,6 @@ public class elevator : MonoBehaviour
     private GameObject doorRightClosed; //Defines right door closed node
     private GameObject doorLeftOpen; //Defines left door open node
     private GameObject doorRightOpen; //Defines right door open node
-    private Rigidbody rb;
 
     private Vector3 lastPosition;
     public Vector3 Movement { get; private set; }  // Movement of elevator
@@ -27,8 +26,6 @@ public class elevator : MonoBehaviour
         doorRightClosed = GameObject.Find("doorRightClosed");
         doorLeftOpen = GameObject.Find("doorLeftOpen");
         doorRightOpen = GameObject.Find("doorRightOpen");
-        rb = GetComponent<Rigidbody>();
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
 
         lastPosition = transform.position;
     }
@@ -80,38 +77,36 @@ public class elevator : MonoBehaviour
 
     public IEnumerator GoToFloor(int floorNumber)
     {
-        yield return StartCoroutine(CloseDoors());
-
-        Debug.Log($"eleLeftDoor right: {elevatorDoorLeft.transform.right}");
-        Debug.Log($"eleRightDoor right: {elevatorDoorRight.transform.right}");
-        Debug.Log($"doorLeftClosed right: {doorLeftClosed.transform.right}");
-        Debug.Log($"doorRightClosed right: {doorRightClosed.transform.right}");
-        
+        // Close elevator doors
         Debug.Log($"GoToFloor({floorNumber}) called");
+        yield return StartCoroutine(CloseDoors());
         
-        // Get a list of all the floor nodes
-        GameObject[] floorNodes = GameObject.FindGameObjectsWithTag("FloorNode");
-
-        Debug.Log($"floorNodes: {floorNodes}");
-
-        // Loop through all the floor nodes
-        for (int i = 0; i < floorNodes.Length; i++)
+        // On floor called, set parent of Level and other floor nodes to floor node of floor called
+        GameObject[] floorNodes = GameObject.FindGameObjectsWithTag("FloorNode");   // Find all floor nodes
+        GameObject floorCalled = GameObject.Find($"floorNode{floorNumber}");        // Find floor node that matches floor number
+        GameObject levelContainer = GameObject.Find("Level");                       // Find level container
+        levelContainer.transform.SetParent(floorCalled.transform);                  // Set level container parent to floor called
+        
+        // Set parent of other floor nodes to floor called
+        foreach (GameObject floorNode in floorNodes)
         {
-            Debug.Log($"floorNodes[{i}]: {floorNodes[i]}");
-            Debug.Log($"floorNodes[{i}] value: {floorNodes[i].GetComponent<floorNode>().floorNumber}");
-
-            int currentFloor = floorNodes[i].GetComponent<floorNode>().floorNumber;
-
-            if (currentFloor == floorNumber)
+            if (floorNode != floorCalled)
             {
-                Debug.Log($"currentFloor: {currentFloor}");
-                Debug.Log($"floorNumber: {floorNumber}");
-                Debug.Log("Elevator is going to the floor node that matches the floor number");
-
-                yield return StartCoroutine(MoveToPosition(elevatorBase, floorNodes[i].transform.position, elevatorSpeed)); 
-                yield return StartCoroutine(OpenDoors());
-                break;
+                floorNode.transform.SetParent(floorCalled.transform);
             }
         }
+
+        // Move level to elevator base
+        yield return StartCoroutine(MoveToPosition(floorCalled, doorRightClosed.transform.position, elevatorSpeed));
+
+        // Return all objects to their original parents
+        levelContainer.transform.SetParent(null);
+        foreach (GameObject floorNode in floorNodes)
+        {
+            floorNode.transform.SetParent(null);
+        }
+
+        // Open elevator doors
+        yield return StartCoroutine(OpenDoors());
     }
 }

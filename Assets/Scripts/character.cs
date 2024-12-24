@@ -72,8 +72,12 @@ public class character : MonoBehaviour
     {
         if (currentPlatform != null) // If current platform is not null
         {
+            /* Old code
             Vector3 platformMovement = currentPlatform.Movement;
             characterController.Move(platformMovement);
+            */ 
+
+            
         }
     }
 
@@ -82,6 +86,7 @@ public class character : MonoBehaviour
         elevator elevator = other.GetComponentInParent<elevator>(); // Gets elevator component
         if (elevator != null) // If elevator is not null
         {
+            /* Old code
             currentPlatform = elevator; // Sets current platform to elevator
             Debug.Log($"currentPlaatform: {currentPlatform}");
             lastPlatformPosition = elevator.transform.position;
@@ -89,6 +94,9 @@ public class character : MonoBehaviour
             rb.isKinematic = true; // Sets rigid body is kinematic to true
             rb.useGravity = false; // Sets rigid body use gravity to false
             Debug.Log("Player entered elevator trigger");
+            */
+
+            // TODO: Move level logic
         }
     }
 
@@ -97,11 +105,15 @@ public class character : MonoBehaviour
         elevator elevator = other.GetComponentInParent<elevator>(); // Gets elevator component
         if (elevator != null) // If elevator is not null
         {
+            /* Old code
             currentPlatform = null; // Sets current platform to null
             // transform.SetParent(null); // Sets transform parent to null
             rb.isKinematic = false; // Sets rigid body is kinematic to false
             rb.useGravity = true; // Sets rigid body use gravity to true
             Debug.Log("Player exited elevator trigger");
+            */
+
+            // TODO: Move level logic
         }
     }
 }

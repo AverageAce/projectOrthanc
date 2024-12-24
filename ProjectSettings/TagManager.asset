@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FloorNode
   - Elevator
+  - LevelContainer
   layers:
   - Default
   - TransparentFX
