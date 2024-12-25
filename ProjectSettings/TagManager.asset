@@ -7,6 +7,8 @@ TagManager:
   - FloorNode
   - Elevator
   - LevelContainer
+  - CallButton
+  - FloorButton
   layers:
   - Default
   - TransparentFX
