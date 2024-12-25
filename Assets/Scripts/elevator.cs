@@ -131,4 +131,9 @@ public class elevator : MonoBehaviour
         // Open elevator doors
         yield return StartCoroutine(OpenDoors());
     }
+
+    // TODO: If elevator buttons pressed, level is parented to floor node of button pressed
+    // TODO: if elevatorCall button pressed, elevator goes to floor node of button pressed
+
+    // TODO: Coroutine queue for elevator calls to prevent multiple calls at once
 }
