@@ -33,7 +33,7 @@ public class elevatorCallButton : MonoBehaviour
         }
 
         // if floor node number does not match the floor number
-        if (elevatorLocation != floorNumber)
+        else
         {
             StartCoroutine(elevator.GoToFloor(floorNumber, "elevatorCallButton"));
         }

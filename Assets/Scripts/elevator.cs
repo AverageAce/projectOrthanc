@@ -12,10 +12,14 @@ public class elevator : MonoBehaviour
     private GameObject doorRightClosed;                 //Defines right door closed node
     private GameObject doorLeftOpen;                    //Defines left door open node
     private GameObject doorRightOpen;                   //Defines right door open node
-    public GameObject floorCounter;                     //Defines floor counter
+    public GameObject floorCounter;                     //Defines floor counter TextMeshPro object inside elevator
+    public GameObject doorStatus;                       //Defines door status TextMeshPro object inside elevator
     private bool isMoving = false;                      //Defines if elevator is moving
     private bool isDoorOpen = false;                    //Defines if elevator door is open
     private Queue<int> floorQueue = new Queue<int>();   //Defines floor queue
+    private int floorCounterInt;                        //Defines floor counter integer
+    private int peekQueue;                              //Defines peek into floor queue
+    private int nextFloor;                              //Defines next floor in queue
 
     private Vector3 lastPosition;
     public Vector3 Movement { get; private set; }       // Movement of elevator
@@ -33,6 +37,7 @@ public class elevator : MonoBehaviour
         doorLeftOpen = GameObject.Find("doorLeftOpen");
         doorRightOpen = GameObject.Find("doorRightOpen");
         floorCounter = GameObject.Find("FloorCounter");
+        doorStatus = GameObject.Find("doorStatus");
 
         lastPosition = transform.position;
     }
@@ -53,11 +58,11 @@ public class elevator : MonoBehaviour
             {
                 lastNode = floorNode;
                 floorCounter.GetComponent<TextMeshPro>().text = lastNode.GetComponent<floorNode>().floorNumber.ToString();
+
+                // Get floorCounter integer value
+                floorCounterInt = int.Parse(floorCounter.GetComponent<TextMeshPro>().text);
             }
         }
-        
-        
-
     }
 
     
@@ -83,6 +88,16 @@ public class elevator : MonoBehaviour
         and elevatorDoorRight to the positions of doorLeftOpen and doorRightOpen
         */
         Debug.Log("OpenDoors() called");
+
+        Debug.Log("Door status: < >");
+        doorStatus.GetComponent<TextMeshPro>().text = "< >";
+
+        // If door is open and on the same floor update doorStatus text
+        if (isDoorOpen)
+        {
+            doorStatus.GetComponent<TextMeshPro>().text = "---";
+        }
+
         StartCoroutine(MoveToPosition(elevatorDoorLeft, doorLeftOpen.transform.position, doorSpeed));
         yield return StartCoroutine(MoveToPosition(elevatorDoorRight, doorRightOpen.transform.position, doorSpeed));
         isDoorOpen = true;
@@ -96,12 +111,31 @@ public class elevator : MonoBehaviour
         elevatorDoorRight to the positions of doorLeftClosed and doorRightClosed
         */
         Debug.Log("CloseDoors() called");
+
+        Debug.Log("Door status: > <");
+        doorStatus.GetComponent<TextMeshPro>().text = "> <";
+
         StartCoroutine(MoveToPosition(elevatorDoorLeft, doorLeftClosed.transform.position, doorSpeed));
         yield return StartCoroutine(MoveToPosition(elevatorDoorRight, doorRightClosed.transform.position, doorSpeed));
         isDoorOpen = false;
     }
 
-    
+    public void DoorStatus(int floorCounter, int nextFloor)
+    {
+        // If current floor is beneath the next floor in queue, return
+        if (floorCounterInt < nextFloor)
+        {
+            // Update text of doorStatus to indicate elevator is moving up
+            doorStatus.GetComponent<TextMeshPro>().text = "^";
+        }
+
+        // If current floor is above the next floor in queue, return
+        if (floorCounterInt > nextFloor)
+        {
+            // Update text of doorStatus to indicate elevator is moving down
+            doorStatus.GetComponent<TextMeshPro>().text = "v";
+        }
+    }
 
     public IEnumerator GoToFloor(int floorNumber, string source)
     {
@@ -118,7 +152,9 @@ public class elevator : MonoBehaviour
         {
             
             isMoving = true;
-            int nextFloor = floorQueue.Dequeue();
+            nextFloor = floorQueue.Dequeue();
+
+            DoorStatus(floorCounterInt, nextFloor);
 
             // Move to next floor in queue
             // if elevatorButton is pressed
@@ -126,6 +162,7 @@ public class elevator : MonoBehaviour
             {
                 // Close elevator doors
                 Debug.Log($"GoToFloor({nextFloor}) called");
+
                 yield return StartCoroutine(CloseDoors());
                 isDoorOpen = false;
                 
@@ -146,6 +183,8 @@ public class elevator : MonoBehaviour
                     }
                 }
 
+                DoorStatus(floorCounterInt, nextFloor);
+
                 // Move level to elevator base
                 yield return StartCoroutine(MoveToPosition(floorCalled, doorRightClosed.transform.position, elevatorSpeed));
 
@@ -156,8 +195,15 @@ public class elevator : MonoBehaviour
                     floorNode.transform.SetParent(null);
                 }
 
+                
+
                 // Open elevator doors
                 yield return StartCoroutine(OpenDoors());
+
+                yield return new WaitForSeconds(5); // Wait for 5 seconds
+
+                doorStatus.GetComponent<TextMeshPro>().text = "---";
+
                 isDoorOpen = true;
             }
 
@@ -172,10 +218,15 @@ public class elevator : MonoBehaviour
 
                 GameObject floorCalled = GameObject.Find($"floorNode{nextFloor}");        // Find floor node that matches floor number
 
+                DoorStatus(floorCounterInt, nextFloor);
+
                 yield return StartCoroutine(MoveToPosition(elevatorBase, floorCalled.transform.position, elevatorSpeed));
 
                 // Open elevator doors
                 yield return StartCoroutine(OpenDoors());
+           
+                doorStatus.GetComponent<TextMeshPro>().text = "---";
+            
                 isDoorOpen = true;
             }
             
@@ -183,6 +234,7 @@ public class elevator : MonoBehaviour
 
         // Elevator is no longer moving
         isMoving = false;
+        
     }
 
     // TODO: If elevator buttons pressed, level is parented to floor node of button pressed
