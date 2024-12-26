@@ -16,10 +16,10 @@ public class elevator : MonoBehaviour
     public GameObject doorStatus;                       //Defines door status TextMeshPro object inside elevator
     private bool isMoving = false;                      //Defines if elevator is moving
     private bool isDoorOpen = false;                    //Defines if elevator door is open
-    private Queue<int> floorQueue = new Queue<int>();   //Defines floor queue
+    public Queue<int> floorQueue = new Queue<int>();    //Defines floor queue
     private int floorCounterInt;                        //Defines floor counter integer
     private int peekQueue;                              //Defines peek into floor queue
-    private int nextFloor;                              //Defines next floor in queue
+    public int nextFloor;                               //Defines next floor in queue
 
     private Vector3 lastPosition;
     public Vector3 Movement { get; private set; }       // Movement of elevator
@@ -44,14 +44,15 @@ public class elevator : MonoBehaviour
 
     void Update()
     {
-        // Update floorCounter text with a floorNodes value whenever doorRightClosed overlaps a floorNode
-        // lastNode is the last Floor Node doorRightClosed collided with
-        GameObject lastNode = null;
-
         /*
-        if any Floor Node tagged object collides with doorRightClosed, get the floorNumber of the Floor Node
+        Update floorCounter text with a floorNode's value whenever doorRightClosed overlaps a floorNode.
+        lastNode is the last "Floor Node" doorRightClosed collided with. 
+
+        If any "Floor Node" tagged object collides with doorRightClosed, get the floorNumber of the "Floor Node" 
         and update the floorCounter text with the floorNumber
         */
+        GameObject lastNode = null;
+
         foreach (GameObject floorNode in GameObject.FindGameObjectsWithTag("FloorNode"))
         {
             if (doorRightClosed.GetComponent<Collider>().bounds.Intersects(floorNode.GetComponent<Collider>().bounds))
@@ -65,7 +66,7 @@ public class elevator : MonoBehaviour
         }
     }
 
-    
+    // Move the specified item to the target position at the specified speed
     private IEnumerator MoveToPosition(GameObject movingItem, Vector3 targetPosition, float speed)
     {
         // While the distance between the moving item and the target position is greater than 0.001f
@@ -87,9 +88,7 @@ public class elevator : MonoBehaviour
         When function OnButtonPressed() is called, move gameObjects elevatorDoorLeft 
         and elevatorDoorRight to the positions of doorLeftOpen and doorRightOpen
         */
-        Debug.Log("OpenDoors() called");
 
-        Debug.Log("Door status: < >");
         doorStatus.GetComponent<TextMeshPro>().text = "< >";
 
         // If door is open and on the same floor update doorStatus text
@@ -110,9 +109,7 @@ public class elevator : MonoBehaviour
         When function OnButtonPressed() is called, move gameObjects elevatorDoorLeft and 
         elevatorDoorRight to the positions of doorLeftClosed and doorRightClosed
         */
-        Debug.Log("CloseDoors() called");
-
-        Debug.Log("Door status: > <");
+    
         doorStatus.GetComponent<TextMeshPro>().text = "> <";
 
         StartCoroutine(MoveToPosition(elevatorDoorLeft, doorLeftClosed.transform.position, doorSpeed));
@@ -139,11 +136,15 @@ public class elevator : MonoBehaviour
 
     public IEnumerator GoToFloor(int floorNumber, string source)
     {
+        Debug.Log($"GoToFloor({floorNumber}) called");
+        
         floorQueue.Enqueue(floorNumber);
+        Debug.Log($"(GTF) Floor {floorNumber} added to queue");    
         
         // If elevator is moving, return
         if (isMoving)
         {
+            Debug.Log($"(GTF{floorNumber}) Elevator is already moving");
             yield break;
         }
         
@@ -152,25 +153,28 @@ public class elevator : MonoBehaviour
         {
             
             isMoving = true;
+            Debug.Log($"(GTF{floorNumber}) Elevator is moving");
             nextFloor = floorQueue.Dequeue();
+            Debug.Log($"(GTF{floorNumber}) Next floor in queue: {nextFloor}");
 
             DoorStatus(floorCounterInt, nextFloor);
 
-            // Move to next floor in queue
+            /* Move to next floor in queue */
+
             // if elevatorButton is pressed
             if (source == "elevatorButtons") 
             {
                 // Close elevator doors
-                Debug.Log($"GoToFloor({nextFloor}) called");
+                Debug.Log($"(GTF{floorNumber}) GoToFloor({nextFloor}) called");
 
                 yield return StartCoroutine(CloseDoors());
                 isDoorOpen = false;
                 
-                Debug.Log($"(GTF) Button {nextFloor} was pressed");
+                Debug.Log($"(GTF{floorNumber}) Button {nextFloor} was pressed");
                 
                 // On elevator button press, set parent of Level and other floor nodes to floor node of floor called
                 GameObject[] floorNodes = GameObject.FindGameObjectsWithTag("FloorNode");   // Find all floor nodes
-                GameObject floorCalled = GameObject.Find($"floorNode{nextFloor}");        // Find floor node that matches floor number
+                GameObject floorCalled = GameObject.Find($"floorNode{nextFloor}");          // Find floor node that matches floor number
                 GameObject levelContainer = GameObject.Find("Level");                       // Find level container
                 levelContainer.transform.SetParent(floorCalled.transform);                  // Set level container parent to floor called
                 
@@ -195,8 +199,6 @@ public class elevator : MonoBehaviour
                     floorNode.transform.SetParent(null);
                 }
 
-                
-
                 // Open elevator doors
                 yield return StartCoroutine(OpenDoors());
 
@@ -213,16 +215,18 @@ public class elevator : MonoBehaviour
                 if (isDoorOpen)
                 {
                     yield return StartCoroutine(CloseDoors());
+                    Debug.Log($"(GTF{floorNumber}) Doors are open, closing doors");
                 }
-                Debug.Log($"(GTF) Call Button {nextFloor} was pressed");
 
                 GameObject floorCalled = GameObject.Find($"floorNode{nextFloor}");        // Find floor node that matches floor number
 
                 DoorStatus(floorCounterInt, nextFloor);
 
+                Debug.Log($"(GTF{floorNumber}) Moving to floor {nextFloor}");
                 yield return StartCoroutine(MoveToPosition(elevatorBase, floorCalled.transform.position, elevatorSpeed));
 
                 // Open elevator doors
+                Debug.Log($"(GTF{floorNumber}) Next floor reached, opening doors");
                 yield return StartCoroutine(OpenDoors());
            
                 doorStatus.GetComponent<TextMeshPro>().text = "---";
@@ -237,10 +241,7 @@ public class elevator : MonoBehaviour
         
     }
 
-    // TODO: If elevator buttons pressed, level is parented to floor node of button pressed
-    // TODO: if elevatorCall button pressed, elevator goes to floor node of button pressed, if floorCounter is not 1
-
-    // DONE // TODO: Coroutine queue for elevator calls to prevent multiple calls at once
-
-    // TODO: GoToFloor: 
+    // TODO: If elevatorButton for current floor is pressed, do nothing if doors are open
+    // TODO: If elevatorButton for current floor is pressed and doors are closed, open doors
+    // TODO: If elevatorButton is pressed and already in queue, do nothing
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class elevatorCallButton : MonoBehaviour
     public int floorNumber;             // Defines floor number
     private GameObject floorNode;       // Defines floor node
     private int elevatorLocation;       // Defines elevator current location
+    private int nextFloor;              // Defines next floor the elevator is travelling to
     public bool isPressed = false;
     
     // On button press, move button inward
@@ -16,15 +18,24 @@ public class elevatorCallButton : MonoBehaviour
     {
         isPressed = true;
         elevator elevator = GameObject.FindFirstObjectByType<elevator>();
-        Debug.Log($"elevator: {elevator}");
+        nextFloor = elevator.nextFloor;
         elevatorLocation = int.Parse(elevator.floorCounter.GetComponent<TextMeshPro>().text);
-        Debug.Log($"Elevator is on floor {elevatorLocation}");
-        Debug.Log($"Call Button {floorNumber} was pressed");
+        Debug.Log($"(ECB) Call Button {floorNumber} was pressed");
+        Debug.Log($"(ECB) Elevator is on floor {elevatorLocation}");
         StartCoroutine(MoveButton());
 
+        // Print the floor queue
+        Debug.Log($"(ECB) nextFloor: {nextFloor}");
+
+        if (floorNumber == nextFloor)
+        {
+            Debug.Log($"(ECB) Floor {floorNumber} is already in the queue, returning");
+            return;
+        }
+        
         // Find the floor node whos floor number matches the button pressed
         floorNode = GameObject.Find($"floorNode{floorNumber}");
-        Debug.Log($"Node retrieved: {floorNode}");
+        Debug.Log($"(ECB) Node retrieved: {floorNode}");
 
         // if floor node number matches the floor number
         if (elevatorLocation == floorNumber)

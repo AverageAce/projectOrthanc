@@ -4,15 +4,12 @@ public class Interactable : MonoBehaviour
 {
     public void Interact()
     {
-        Debug.Log($"{gameObject.name} was interacted with!");
-
         /* Call other script functions */
 
         // Elevator Call Button
         elevatorCallButton elevatorCallButton = GetComponent<elevatorCallButton>();
         elevator elevator = GameObject.FindFirstObjectByType<elevator>();
-        Debug.Log($"elevatorCallButton: {elevatorCallButton}");
-        Debug.Log($"elevator: {elevator}");
+        
         if (elevatorCallButton != null)
         {
             elevatorCallButton.OnButtonPressed();
