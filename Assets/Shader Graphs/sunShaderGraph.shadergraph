@@ -47,7 +47,17 @@
         }
     ],
     "m_GroupDatas": [],
-    "m_StickyNoteDatas": [],
+    "m_StickyNoteDatas": [
+        {
+            "m_Id": "02be5aee2532428aba76c1c85213e1a4"
+        },
+        {
+            "m_Id": "ed9e3ec685ad427c9641b4bde8a8c686"
+        },
+        {
+            "m_Id": "bafee1eb70324ca4b22e4652ae1105bc"
+        }
+    ],
     "m_Edges": [
         {
             "m_OutputSlot": {
@@ -151,6 +161,26 @@
         "w": 0.0
     },
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "02be5aee2532428aba76c1c85213e1a4",
+    "m_Title": "Notes",
+    "m_Content": "This is a sticky note, add ShaderGraph notes and TODOs and stuff here:\n\nShaderGraph:\n\n- Rasterization Pipeline\n\t- 3D Model: Vertices, normals, UVs, tangents, to...\n\t- ... Vertex Processing: Computes normalized coordinate space of the vertices (model coordinates to screen coordinates), to...\n\t- ... Primitive Processing: Vertices are grouped in primitives like triangles, triangles are clipped and culled, to...\n\t- ... Rasterization: Triangles are sampled to produce fragments, to...\n\t- ... Fragment Processing: Fragments are colored, to...\n\t- ... Colored fragments are sent to a buffer, to...\n\t- ... Depth and Color Processing, to...\n\t- ... Output image in pixels\n\n- The Master Stack\n\t- Consists of the Vertex and Fragment contexts together\n\nTODO:",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": 238.0,
+        "y": 2.0,
+        "width": 743.0,
+        "height": 490.0
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
 }
 
 {
@@ -468,8 +498,8 @@
     "m_CustomSlotLabel": "",
     "m_DismissedVersion": 0,
     "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
+    "overrideHLSLDeclaration": true,
+    "hlslDeclarationOverride": 2,
     "m_Hidden": false,
     "m_Value": {
         "r": 0.9905660152435303,
@@ -612,10 +642,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -219.5,
-            "y": 201.0,
-            "width": 0.0,
-            "height": 0.0
+            "x": -222.0,
+            "y": 238.0,
+            "width": 130.0,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -745,6 +775,26 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "bafee1eb70324ca4b22e4652ae1105bc",
+    "m_Title": "Fragment Block (Context)",
+    "m_Content": "Part of the rasterization pipeline. Responsible for coloring pixels. ",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": 1.0,
+        "y": 502.0,
+        "width": 222.3587646484375,
+        "height": 100.26971435546875
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.ColorRGBMaterialSlot",
     "m_ObjectId": "e1a57093a43a48a3a474a59603584898",
     "m_Id": 0,
@@ -770,6 +820,26 @@
         "g": 0.5,
         "b": 0.5,
         "a": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "ed9e3ec685ad427c9641b4bde8a8c686",
+    "m_Title": "Vertex Block (Context)",
+    "m_Content": "Data about the 3D object comes into the shader code. Position, Normal, and Tangent come from the mesh data structure. The data for the object is stored in the \"Mesh Filter\" component of the object and contains data from the original modeling package (in this case Blender). Looking up \"Mesh\" in the Unity Scripting API, you can see all of the data contained by a mesh. \"Position\" corresponds to the \"vertices\" attribute, \"Normal\" corresponds to \"normals\", and \"Tangent\" corresponds to \"tangents\". \"Position\" is the XYZ coordinate of a vertex, \"Normal\" is a Vector that sits perpindicular to a face, \"Tangent\" is a Vector that sits parallel to a face.",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": 3.0,
+        "y": -332.0,
+        "width": 219.0,
+        "height": 323.5719909667969
+    },
+    "m_Group": {
+        "m_Id": ""
     }
 }
 
