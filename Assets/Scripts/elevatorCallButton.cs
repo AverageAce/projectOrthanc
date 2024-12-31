@@ -76,6 +76,5 @@ public class elevatorCallButton : MonoBehaviour
         // Snap to the exact target position to avoid overshooting
         transform.position = targetPosition;
     }
-
     
 }
