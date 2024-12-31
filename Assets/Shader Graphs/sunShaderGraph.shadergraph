@@ -4483,8 +4483,8 @@
     "m_ObjectId": "133585ea89ee4a92af5883b8d3ad7a7e",
     "m_Title": "Blackpoint",
     "m_Position": {
-        "x": -7542.50048828125,
-        "y": -3476.999755859375
+        "x": -7542.5,
+        "y": -3477.0
     }
 }
 
@@ -7791,7 +7791,7 @@
     "m_Title": "Whitepoint - blackpoint",
     "m_Position": {
         "x": -12464.0,
-        "y": -4873.99951171875
+        "y": -4874.0
     }
 }
 
@@ -10440,7 +10440,7 @@
     "m_Title": "MidTones",
     "m_Position": {
         "x": -10804.5,
-        "y": -4071.499755859375
+        "y": -4071.5
     }
 }
 
@@ -14269,8 +14269,8 @@
     "m_ObjectId": "a0874f8a0261481baa3bbb3448370271",
     "m_Title": "MidTones",
     "m_Position": {
-        "x": -5897.00048828125,
-        "y": -3216.000244140625
+        "x": -5897.0,
+        "y": -3216.0
     }
 }
 
@@ -14969,7 +14969,7 @@
     "m_Title": "(BlendOutput - Blackpoint) / (WhitePoint - Blackpoint)",
     "m_Position": {
         "x": -11672.5,
-        "y": -4071.499755859375
+        "y": -4071.5
     }
 }
 
@@ -15879,8 +15879,8 @@
     "m_ObjectId": "b1800989ce06451d8a8be921e70582ba",
     "m_Title": "(BlendOutput - Blackpoint) / (WhitePoint - Blackpoint)",
     "m_Position": {
-        "x": -6765.00048828125,
-        "y": -3216.000244140625
+        "x": -6765.0,
+        "y": -3216.0
     }
 }
 
@@ -17064,7 +17064,7 @@
     "m_Title": "Blackpoint",
     "m_Position": {
         "x": -12464.0,
-        "y": -4332.49951171875
+        "y": -4332.5
     }
 }
 
@@ -17264,7 +17264,7 @@
     "m_ObjectId": "c1f761c98a7c4f0fb02d4843eeb12921",
     "m_Title": "Whitepoint - blackpoint",
     "m_Position": {
-        "x": -7542.50048828125,
+        "x": -7542.5,
         "y": -2991.0
     }
 }
@@ -20840,7 +20840,7 @@
     "m_Title": "Whitepoint - blackpoint",
     "m_Position": {
         "x": -12450.0,
-        "y": -3846.499755859375
+        "y": -3846.5
     }
 }
 
