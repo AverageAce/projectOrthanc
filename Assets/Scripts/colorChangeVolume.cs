@@ -12,15 +12,23 @@ public class colorChangeVolume : MonoBehaviour
     public bool isInside = false;
     public Renderer sunRenderer;  // Defines the sun renderer component
     public Renderer coronaRenderer;  // Defines the sun renderer component
+    public GameObject sunLight;  // Defines the sun light object
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         sun = GameObject.Find("sun");
         player = GameObject.Find("Player");
+        sunLight = GameObject.Find("sunLight");
 
         Material sunMaterial = sunRenderer.material;
         Material coronaMaterial = coronaRenderer.material;
+
+        // Set sunLight color to FresnelColor of the sun
+        sunLight.GetComponent<Light>().color = sunMaterial.GetColor("_FresnelColor");
+
+        // Set the intensity of the sun light
+        sunLight.GetComponent<Light>().intensity = 25f;
     }
 
     void Update()
@@ -42,6 +50,12 @@ public class colorChangeVolume : MonoBehaviour
 
             sunMaterial.SetFloat("_DistanceFactor", normalizedDistance);
             coronaMaterial.SetFloat("_DistanceFactor", normalizedDistance);
+
+            // Linear interpolate between sun FresnelColor and AltFresnelColor using normalized distance
+            sunLight.GetComponent<Light>().color = Color.Lerp(sunMaterial.GetColor("_FresnelColor"), sunMaterial.GetColor("_AltFresnelColor"), normalizedDistance);
+            
+            // Linear interpolate between light temperature of 2192 and 7250 using normalized distance
+            sunLight.GetComponent<Light>().colorTemperature = Mathf.Lerp(2192, 7250, normalizedDistance);
         }
     }
 

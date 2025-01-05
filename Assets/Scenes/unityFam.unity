@@ -2022,11 +2022,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 0
   maxDistance: 0
+  minDistance: 8
   sun: {fileID: 0}
   player: {fileID: 0}
+  playerTransform: {fileID: 0}
+  sunTransform: {fileID: 0}
   isInside: 0
   sunRenderer: {fileID: 14141125}
   coronaRenderer: {fileID: 892797205}
+  sunLight: {fileID: 0}
 --- !u!114 &370807619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6626,7 +6630,7 @@ GameObject:
   - component: {fileID: 1569408959}
   - component: {fileID: 1569408958}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: sunLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6682,7 +6686,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 0.63069737, b: 0.1273585, a: 1}
   m_Intensity: 5000
-  m_Range: 25
+  m_Range: 80
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -8362,7 +8366,7 @@ Transform:
   m_GameObject: {fileID: 1914350624}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 13, y: 21.61, z: 0}
+  m_LocalPosition: {x: 5.12, y: 1.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
