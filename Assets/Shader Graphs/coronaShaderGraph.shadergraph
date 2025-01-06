@@ -3220,8 +3220,8 @@
     "m_ObjectId": "008ebbc44d7a400fbb85d833d75b6cba",
     "m_Title": "Old Base Color Transition",
     "m_Position": {
-        "x": -7022.99951171875,
-        "y": 167.9998016357422
+        "x": -7023.0,
+        "y": 168.0001678466797
     }
 }
 
@@ -3303,8 +3303,8 @@
     "m_ObjectId": "01fc8a3fadd14d089392e5813721e051",
     "m_Title": "Whitepoint - blackpoint",
     "m_Position": {
-        "x": -4301.9990234375,
-        "y": -769.0001831054688
+        "x": -4302.0009765625,
+        "y": -769.0
     }
 }
 
@@ -9130,8 +9130,8 @@
     "m_ObjectId": "4e9f4ca5f72b43a794e6cd6cd29c4a78",
     "m_Title": "Whitepoint - blackpoint",
     "m_Position": {
-        "x": -5578.99951171875,
-        "y": 94.00007629394531
+        "x": -5579.0009765625,
+        "y": 94.0
     }
 }
 
@@ -9997,7 +9997,7 @@
     "m_ObjectId": "5c83aa5a6a0748afbdef5af88ee27134",
     "m_Title": "Blackpoint",
     "m_Position": {
-        "x": -5578.99951171875,
+        "x": -5579.0009765625,
         "y": -392.0
     }
 }
@@ -10704,8 +10704,8 @@
     "m_ObjectId": "65af84ff7a55476780dc08ecf5c7fd49",
     "m_Title": "(BlendOutput - Blackpoint) / (WhitePoint - Blackpoint)",
     "m_Position": {
-        "x": -4801.99951171875,
-        "y": -131.0
+        "x": -4802.0009765625,
+        "y": -130.9998321533203
     }
 }
 
@@ -13731,8 +13731,8 @@
     "m_ObjectId": "8d90cacb8f6d4260a7f4fc93405f80aa",
     "m_Title": "Old Hue Shift Method",
     "m_Position": {
-        "x": -2334.999755859375,
-        "y": -2068.0
+        "x": -2335.0,
+        "y": -2067.999755859375
     }
 }
 
@@ -15188,8 +15188,8 @@
     "m_ObjectId": "a207cd98f32a44bfaae9c664d55abf2f",
     "m_Title": "Accent Color Transition",
     "m_Position": {
-        "x": -1297.000244140625,
-        "y": -882.9998779296875
+        "x": -1297.0,
+        "y": -883.0
     }
 }
 
@@ -16245,8 +16245,8 @@
     "m_ObjectId": "aeb72a6ce21c4502b6cfd122f1204940",
     "m_Title": "MidTones",
     "m_Position": {
-        "x": -4091.999755859375,
-        "y": -133.0
+        "x": -4092.0,
+        "y": -132.99951171875
     }
 }
 
@@ -17962,8 +17962,8 @@
     "m_ObjectId": "c7535fe914914aa0ab3b92f3250b0398",
     "m_Title": "MidTones",
     "m_Position": {
-        "x": -2969.000244140625,
-        "y": -991.0
+        "x": -2969.0,
+        "y": -990.999755859375
     }
 }
 
@@ -18307,8 +18307,8 @@
     "m_ObjectId": "cbd29c41f0634f8b9f9881ab2aed631f",
     "m_Title": "Base Color Control",
     "m_Position": {
-        "x": -6183.99951171875,
-        "y": -967.9999389648438
+        "x": -6184.0009765625,
+        "y": -967.999755859375
     }
 }
 
@@ -21527,8 +21527,8 @@
     "m_ObjectId": "f29e84622e1941a285fc10d2fe64d57b",
     "m_Title": "(BlendOutput - Blackpoint) / (WhitePoint - Blackpoint)",
     "m_Position": {
-        "x": -3673.00048828125,
-        "y": -994.0001220703125
+        "x": -3673.001220703125,
+        "y": -994.0000610351563
     }
 }
 
@@ -21696,8 +21696,8 @@
     "m_ObjectId": "f5cebc42a06e40ea926fab4760b9693d",
     "m_Title": "Blackpoint",
     "m_Position": {
-        "x": -4301.9990234375,
-        "y": -1254.999755859375
+        "x": -4302.0009765625,
+        "y": -1255.0001220703125
     }
 }
 
